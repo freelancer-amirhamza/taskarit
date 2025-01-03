@@ -70,6 +70,7 @@ const AdminProducts = () => {
             toast({
               title: "The Product is has been added successfully",
             });
+            window.location.reload()
           } else {
             toast({
               title: "Something is wrong!, Please Try again!",
@@ -95,9 +96,8 @@ const AdminProducts = () => {
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch]);
-  console.log(productsList, uploadedImageUrl, "productsList");
+  
   return (
-
      <Fragment>
       <div className="flex w-full justify-between mb-5 ">
         <Button onClick={() => navigate("/")}>

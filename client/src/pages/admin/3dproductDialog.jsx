@@ -27,7 +27,6 @@ const ThreeDProductDialog = ({ open, setOpen }) => {
   const [formData, setFormData] = useState(initialFormData);
   const { toast } = useToast();
   const modelViewerRef = useRef();
-  const [loading, setLoading] = useState(false)
 
 
   const uploadToCloudinary = async (dataURL) => {
@@ -39,7 +38,6 @@ const ThreeDProductDialog = ({ open, setOpen }) => {
         `https://api.cloudinary.com/v1_1/dmh7euix6/image/upload`, // Replace with your cloud name
         formData
       );
-      console.log('Uploaded image URL:', response.data.secure_url);
       return response.data.secure_url;
     } catch (error) {
       console.error('Error uploading image:', error);
@@ -59,16 +57,16 @@ const ThreeDProductDialog = ({ open, setOpen }) => {
         })
       ).then((data) => {
         if (data?.payload?.success) {
-          setLoading(true);
           setOpen(false)
           setFormData(initialFormData);
-          setLoading(false)
           toast({
             title: 'The Product has been added successfully',
           });
+          window.location.reload()
         }else{
           toast({
             title: 'The Product has not added, Please try again!',
+            variant: "destructive",
           });
         }
       });
@@ -93,10 +91,6 @@ const ThreeDProductDialog = ({ open, setOpen }) => {
               <Canvas shadows className="bg-white rounded-md" camera={{ position: [0, 0, 4], fov: 45 }}>
                 <ModelViewer ref={modelViewerRef} />
               </Canvas>
-              <div className="cursor-pointer absolute sr-only flex gap-2 p-[5px] bg-sky-10 font-bold hover:bg-sky-200 border rounded-2xl ">
-                <Palette />
-                <h1>Customization</h1>
-              </div>
               <Picker />
             </div>
           </div>
@@ -104,7 +98,7 @@ const ThreeDProductDialog = ({ open, setOpen }) => {
             <CommonForm
               formData={formData}
               setFormData={setFormData}
-              buttonText={`${loading ? "Loading..!" : "Add"}`}
+              buttonText="Add"
               formControls={addProductFormElements}
               onSubmit={onSubmit}
             isBtnDisabled={!isFormValid()}

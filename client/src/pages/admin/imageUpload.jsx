@@ -19,15 +19,8 @@ const ProductImageUpload = ({
   const [image, setImage]= useState("");
   const inputRef = useRef(null);
   const handleImageFileChange = (event) => {
-    console.log(event.target.files?.[0]);
     const selectFile = event.target.files?.[0];
     if (selectFile) setImageFile(selectFile);
-    var reader = new FileReader();
-    reader.readAsDataURL(event.target.files?.[0]);
-    reader.onload = ()=>{
-      console.log(reader.result);
-      setImage(reader.result)
-    }
   };
 
   const handleDragOver = (event) => {
@@ -59,6 +52,7 @@ const ProductImageUpload = ({
 
     if (response?.data?.success) {
       setUploadedImageUrl(response.data.result.url);
+      setImage(response.data.result.url)
       setImageLoadingState(false);
     }
   };
