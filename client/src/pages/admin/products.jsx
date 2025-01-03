@@ -12,6 +12,7 @@ import { addProduct, deleteProduct, getAllProducts, updateProduct } from "@/stor
 import { useToast } from "@/hooks/use-toast";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useNavigate } from "react-router-dom";
+import ThreeDProductDialog from "@/pages/admin/3dproductDialog";
 
 const initialFormData = {
   image: null,
@@ -25,6 +26,7 @@ const initialFormData = {
 const AdminProducts = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [openCreateProductDialog, setOpenCreateProductDialog] = useState(false);
+  const [openThreeDProductDialog, setOpenThreeDProductDialog] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [imageFile, setImageFile] = useState(null);
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
@@ -34,6 +36,7 @@ const AdminProducts = () => {
   const dispatch = useDispatch();
   const { toast } = useToast();
   const navigate = useNavigate()
+
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -100,6 +103,9 @@ const AdminProducts = () => {
         <Button onClick={() => navigate("/")}>
           Back Home
         </Button>
+        <Button onClick={() => setOpenThreeDProductDialog(true)}>
+          Add 3D Products
+        </Button>
         <Button onClick={() => setOpenCreateProductDialog(true)}>
           Add Products
         </Button>
@@ -118,6 +124,45 @@ const AdminProducts = () => {
             ))
           : null}
       </div>
+      <ThreeDProductDialog
+      open={openThreeDProductDialog}
+      setOpen={setOpenThreeDProductDialog}
+      />
+      <Sheet
+        open={openCreateProductDialog}
+        className=" duration-500 "
+        onOpenChange={() => {
+          setOpenCreateProductDialog(false);
+          setCurrentEditedId(null);
+          setFormData(initialFormData);
+        }}
+      >
+        <SheetContent side="right" className="overflow-auto">
+          <SheetHeader>
+            <SheetTitle>
+              {currentEditedId !== null ? "Edit Product" : "Add New Product"}
+            </SheetTitle>
+            <ProductImageUpload
+              imageFile={imageFile}
+              setImageFile={setImageFile}
+              uploadedImageUrl={uploadedImageUrl}
+              setUploadedImageUrl={setUploadedImageUrl}
+              imageLoadingState={imageLoadingState}
+              setImageLoadingState={setImageLoadingState}
+              isEditMode={currentEditedId !== null}
+            />
+          </SheetHeader>
+          <CommonForm
+            formData={formData}
+            setFormData={setFormData}
+            buttonText={currentEditedId !== null ? "Edit" : "Add"}
+            formControls={addProductFormElements}
+            onSubmit={onSubmit}
+            isBtnDisabled={!isFormValid()}
+          />
+        </SheetContent>
+      </Sheet>
+
       <Sheet
         open={openCreateProductDialog}
         className=" duration-500 "
