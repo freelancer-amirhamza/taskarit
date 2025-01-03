@@ -1,9 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { getAllProducts, getProductDetails } from "@/store/product-slice";
 import { addToCart, getCartItems } from "@/store/cart-slice";
@@ -16,8 +12,6 @@ const Home = () => {
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false)
   const dispatch = useDispatch();
   const { productsList, productDetails } = useSelector((state) => state.productsSlice);
-
-
 
   const handleGetProductDetails = (getCurrentProductId) => {
     dispatch(getProductDetails(getCurrentProductId));
@@ -45,7 +39,6 @@ const Home = () => {
       getAllProducts()
     );
   }, [dispatch]);
-
 
 
   useEffect(() => {

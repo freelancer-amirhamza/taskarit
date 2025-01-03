@@ -12,7 +12,7 @@ import { addProduct, deleteProduct, getAllProducts, updateProduct } from "@/stor
 import { useToast } from "@/hooks/use-toast";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useNavigate } from "react-router-dom";
-import ThreeDProductDialog from "@/pages/admin/3dproductDialog";
+import ThreeDProductDialog from "@/pages/admin/3DProductDialog";
 
 const initialFormData = {
   image: null,

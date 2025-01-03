@@ -19,9 +19,9 @@
 
 
 
-h1 {
+h5 {
   position: absolute;
-  bottom: 30px;
+  bottom: 50px;
   text-transform: capitalize;
   right: 40px;
   padding: 0;
@@ -34,7 +34,7 @@ h1 {
 
 .picker {
   position: absolute !important;
-  bottom: 0px;
+  bottom: 40px;
   left: 20px;
   width: 90px !important;
   height: 90px !important;
